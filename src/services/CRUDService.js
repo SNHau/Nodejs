@@ -12,9 +12,9 @@ let createNewUser = async (data) => {
             await db.User.create({
                 email: data.email,
                 password: hassPasswordFromBcrypt,
-                firstName: data.firtname,
+                firstName: data.firstname,
                 lastName: data.lastname,
-                address: data.adđress,
+                address: data.address,
                 phonenumber: data.phonenumber,
                 gender: data.gender === '1' ? true : false,
                 roleId: data.roleId
@@ -54,7 +54,53 @@ let getAllUser = () => {
         }
     })
 }
+
+let getUserInfoById = (userId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let user = await db.User.findOne({
+                where: { id: userId },
+                raw: true,
+            })
+
+            if (user) {
+                resolve(user)
+            } else {
+                resolve({})
+            }
+        } catch (e) {
+            reject(e)
+        }
+
+    })
+}
+let updateUserData = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let user = await db.User.findOne({
+                where: { id: data.id }
+            })
+            if (user) {
+                user.firstName = data.firstName;
+                user.lastName = data.lastName;
+                user.address = data.address;
+
+                await user.save();
+
+                let allUsers = await db.User.findAll();
+                resolve(allUsers);
+            } else {
+                resolve();
+            }
+
+        } catch (e) {
+            console.log(e);
+        }
+    })
+}
 module.exports = {
     createNewUser: createNewUser,
-    getAllUser: getAllUser
+    getAllUser: getAllUser,
+    getUserInfoById: getUserInfoById,
+    updateUserData: updateUserData
 }

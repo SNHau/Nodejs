@@ -12,6 +12,28 @@
     td {
         border: 1px solid black;
     }
+
+    .btn-edit {
+        background: orange;
+        outline: none;
+        border: none;
+        height: 25px;
+        width: 60px;
+        /* margin: 5px; */
+        border-radius: 3px;
+        cursor: pointer;
+    }
+
+    .btn-delete {
+        background: #ff0023;
+        outline: none;
+        border: none;
+        height: 25px;
+        width: 60px;
+        /* margin: 5px; */
+        border-radius: 3px;
+        cursor: pointer;
+    }
 </style>
 
 <body>
@@ -24,6 +46,7 @@
             <th>Gender</th>
             <th>RoleId</th>
             <th>Phonenumber</th>
+            <th>Actions</th>
         </tr>
 
 
@@ -49,6 +72,10 @@
                 </td>
                 <td>
                     <%= dataTable[i].phonenumber %>
+                </td>
+                <td>
+                    <a href="/edit-crud?id=<%= dataTable[i].id %>" class="btn-edit" type="button">Edit</a>
+                    <a class="btn-delete" type="button">Delete</a>
                 </td>
             </tr>
             <% } %>
